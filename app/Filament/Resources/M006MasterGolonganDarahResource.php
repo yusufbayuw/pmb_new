@@ -7,6 +7,9 @@ use App\Filament\Resources\M006MasterGolonganDarahResource\RelationManagers;
 use App\Models\M006MasterGolonganDarah;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Infolists\Components\IconEntry;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -29,13 +32,23 @@ class M006MasterGolonganDarahResource extends Resource
 
     protected static ?string $slug = 'golongan-darah';
 
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                TextEntry::make('nama'),
+                IconEntry::make('status')
+                    ->boolean(),
+            ]);
+    }
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('nama')
                     ->maxLength(255),
-                Forms\Components\Toggle::make('status'),
+                Forms\Components\Hidden::make('status')->default(1),
             ]);
     }
 

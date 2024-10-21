@@ -49,7 +49,7 @@ class UserResource extends Resource
                     ->password()
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Toggle::make('status'),
+                Forms\Components\Hidden::make('status')->default(1),
             ]);
     }
 

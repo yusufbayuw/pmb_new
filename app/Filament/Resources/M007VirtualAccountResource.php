@@ -7,6 +7,9 @@ use App\Filament\Resources\M007VirtualAccountResource\RelationManagers;
 use App\Models\M007VirtualAccount;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Infolists\Components\IconEntry;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -29,6 +32,18 @@ class M007VirtualAccountResource extends Resource
 
     protected static ?string $slug = 'virtual-account';
 
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                TextEntry::make('gelombang.nama'),
+                TextEntry::make('nomor'),
+                TextEntry::make('bank'),
+                IconEntry::make('status')
+                    ->boolean(),
+            ]);
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -39,7 +54,7 @@ class M007VirtualAccountResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('nomor')
                     ->maxLength(255),
-                Forms\Components\Toggle::make('status'),
+                Forms\Components\Hidden::make('status')->default(1),
             ]);
     }
 

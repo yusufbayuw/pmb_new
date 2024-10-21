@@ -7,6 +7,9 @@ use App\Filament\Resources\M003MasterPekerjaanResource\RelationManagers;
 use App\Models\M003MasterPekerjaan;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Infolists\Components\IconEntry;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -29,13 +32,23 @@ class M003MasterPekerjaanResource extends Resource
 
     protected static ?string $slug = 'pekerjaan';
 
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                TextEntry::make('nama'),
+                IconEntry::make('status')
+                    ->boolean(),
+            ]);
+    }
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('nama')
                     ->maxLength(255),
-                Forms\Components\Toggle::make('status'),
+                Forms\Components\Hidden::make('status')->default(1),
             ]);
     }
 

@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\M008StudentRegistrationResource\Pages;
 use App\Filament\Resources\M008StudentRegistrationResource\RelationManagers;
+use App\Models\M001MasterGelombang;
 use App\Models\M008StudentRegistration;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -25,18 +26,16 @@ class M008StudentRegistrationResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Pendaftaran';
 
-    protected static ?string $slug = 'gelombang';
+    protected static ?string $slug = 'pendaftaran';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('gelombang_id')
-                    ->relationship('gelombang', 'id'),
-                Forms\Components\TextInput::make('nomor_daftar')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('nomor_peserta')
-                    ->maxLength(255),
+                Forms\Components\Hidden::make('gelombang_id')
+                    ->default(M001MasterGelombang::where('status', true)->first()->id ?? null),
+                Forms\Components\Hidden::make('nomor_daftar'),
+                Forms\Components\Hidden::make('nomor_peserta'),
                 Forms\Components\TextInput::make('nik')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('nama_lengkap')
@@ -61,15 +60,19 @@ class M008StudentRegistrationResource extends Resource
                     ->email()
                     ->maxLength(255),
                 Forms\Components\Select::make('agama_id')
-                    ->relationship('agama', 'id'),
-                Forms\Components\TextInput::make('warga_negara')
-                    ->maxLength(255),
+                    ->relationship('agama', 'nama'),
+                Forms\Components\Select::make('warga_negara')
+                    ->options([
+                        'WNI' => 'WNI',
+                        'WNA' => 'WNA'
+                    ])
+                    ->default('WNI'),
                 Forms\Components\TextInput::make('asal_sekolah')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('alamat_sekolah')
                     ->maxLength(255),
                 Forms\Components\Select::make('golongan_darah_id')
-                    ->relationship('golonganDarah', 'id'),
+                    ->relationship('golonganDarah', 'nama'),
                 Forms\Components\TextInput::make('nik_ayah')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('nama_ayah')
@@ -83,9 +86,9 @@ class M008StudentRegistrationResource extends Resource
                     ->email()
                     ->maxLength(255),
                 Forms\Components\Select::make('pendidikan_ayah_id')
-                    ->relationship('pendidikanAyah', 'id'),
+                    ->relationship('pendidikanAyah', 'nama'),
                 Forms\Components\Select::make('pekerjaan_ayah_id')
-                    ->relationship('pekerjaanAyah', 'id'),
+                    ->relationship('pekerjaanAyah', 'nama'),
                 Forms\Components\TextInput::make('nik_ibu')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('nama_ibu')
@@ -99,21 +102,18 @@ class M008StudentRegistrationResource extends Resource
                     ->email()
                     ->maxLength(255),
                 Forms\Components\Select::make('pendidikan_ibu_id')
-                    ->relationship('pendidikanIbu', 'id'),
+                    ->relationship('pendidikanIbu', 'nama'),
                 Forms\Components\Select::make('pekerjaan_ibu_id')
-                    ->relationship('pekerjaanIbu', 'id'),
+                    ->relationship('pekerjaanIbu', 'nama'),
                 Forms\Components\TextInput::make('data_prestasi'),
                 Forms\Components\TextInput::make('sumbangan_sukarela')
                     ->numeric(),
-                Forms\Components\TextInput::make('verifikasi')
-                    ->numeric()
+                Forms\Components\Hidden::make('verifikasi')
                     ->default(0),
-                Forms\Components\Toggle::make('status'),
-                Forms\Components\TextInput::make('hasil_seleksi')
-                    ->numeric()
+                Forms\Components\Hidden::make('status')->default(1),
+                Forms\Components\Hidden::make('hasil_seleksi')
                     ->default(0),
-                Forms\Components\Select::make('virtual_account_id')
-                    ->relationship('virtualAccount', 'id'),
+                Forms\Components\Hidden::make('virtual_account_id'),
                 Forms\Components\TextInput::make('pilihan_1')
                     ->numeric(),
                 Forms\Components\TextInput::make('pilihan_2')
@@ -127,7 +127,7 @@ class M008StudentRegistrationResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('gelombang.id')
+                Tables\Columns\TextColumn::make('gelombang.nama')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('nomor_daftar')
@@ -157,8 +157,7 @@ class M008StudentRegistrationResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('agama.id')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('agama.nama')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('warga_negara')
                     ->searchable(),
@@ -166,8 +165,7 @@ class M008StudentRegistrationResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('alamat_sekolah')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('golonganDarah.id')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('golonganDarah.nama')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('nik_ayah')
                     ->searchable(),
@@ -179,11 +177,9 @@ class M008StudentRegistrationResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email_ayah')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('pendidikanAyah.id')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('pendidikanAyah.nama')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('pekerjaanAyah.id')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('pekerjaanAyah.nama')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('nik_ibu')
                     ->searchable(),
@@ -195,11 +191,9 @@ class M008StudentRegistrationResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email_ibu')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('pendidikanIbu.id')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('pendidikanIbu.nama')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('pekerjaanIbu.id')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('pekerjaanIbu.nama')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('sumbangan_sukarela')
                     ->numeric()
@@ -212,8 +206,7 @@ class M008StudentRegistrationResource extends Resource
                 Tables\Columns\TextColumn::make('hasil_seleksi')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('virtualAccount.id')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('virtualAccount.nama')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('pilihan_1')
                     ->numeric()
