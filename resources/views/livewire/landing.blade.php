@@ -4,7 +4,7 @@
       <div class="flex lg:flex-1">
         <a href="#" class="-m-1.5 p-1.5">
           <span class="sr-only">Taruna Bakti University</span>
-          <img class="h-8 w-auto" src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600" alt="">
+          <img class="h-8 w-auto" src="https://tbu.ac.id/wp-content/uploads/2024/10/tbu.png" alt="">
         </a>
       </div>
       <div class="flex flex-1 justify-end lg:hidden">
