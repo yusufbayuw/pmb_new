@@ -9,6 +9,10 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class M008StudentRegistration extends Model
 {
+    protected $casts = [
+        'data_prestasi' => 'json',
+    ];
+
     use HasFactory;
 
     // Define relationships

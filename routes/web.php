@@ -1,5 +1,7 @@
 <?php
 
+use App\Livewire\Forms\Utb;
+use App\Livewire\Landing;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +15,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', Landing::class)->name('landing');
+Route::get('/pendaftaran', Utb::class)->name('pendaftaran');
+
+Route::get('/login', function () {
+    return redirect('/portal/login');
+})->name('login');

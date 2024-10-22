@@ -18,7 +18,7 @@ class M008StudentRegistrationResource extends Resource
 {
     protected static ?string $model = M008StudentRegistration::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-document';
 
     protected static ?string $navigationLabel = 'Pendaftaran';
 
@@ -32,79 +32,171 @@ class M008StudentRegistrationResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\Section::make('Pilihan Program Studi')
+                    ->description('Pilihlah tiga Program Studi')
+                    ->schema([
+                        Forms\Components\Select::make('pilihan_1')
+                            ->label('Pilihan Ke-1')
+                            ->relationship('pilihan1', 'nama')
+                            ->required(),
+                        Forms\Components\Select::make('pilihan_2')
+                            ->label('Pilihan Ke-2')
+                            ->relationship('pilihan2', 'nama')
+                            ->required(),
+                        Forms\Components\Select::make('pilihan_3')
+                            ->label('Pilihan Ke-3')
+                            ->relationship('pilihan3', 'nama')
+                            ->required(),
+                    ]),
+                Forms\Components\Section::make('Data Diri')
+                    ->description('Isi data diri')
+                    ->schema([
+                        Forms\Components\TextInput::make('nik')
+                            ->label('NIK')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('nama_lengkap')
+                            ->label('Nama Lengkap')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('tempat_lahir')
+                            ->maxLength(255)
+                            ->required(),
+                        Forms\Components\DatePicker::make('tanggal_lahir')
+                            ->label('Tanggal Lahir')
+                            ->native(false)
+                            ->placeholder('klik untuk memilih tanggal')
+                            ->displayFormat('d F Y')
+                            ->closeOnDateSelection()
+                            ->required(),
+                        Forms\Components\TextInput::make('no_telp_handphone')
+                            ->label('Nomor Telp/HP')
+                            ->required()
+                            ->tel()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('email')
+                            ->required()
+                            ->email()
+                            ->maxLength(255),
+                        Forms\Components\Select::make('agama_id')
+                            ->required()
+                            ->label('Agama')
+                            ->relationship('agama', 'nama'),
+                        Forms\Components\Select::make('warga_negara')
+                            ->label('Warga Negara')
+                            ->required()
+                            ->options([
+                                'WNI' => 'WNI',
+                                'WNA' => 'WNA'
+                            ])
+                            ->default('WNI'),
+                        Forms\Components\Select::make('golongan_darah_id')
+                            ->label('Golongan Darah')
+                            ->relationship('golonganDarah', 'nama'),
+                        Forms\Components\Fieldset::make('Data Alamat')
+                            ->schema([
+                                Forms\Components\Textarea::make('alamat_di_bandung')
+                                    ->label('Alamat di Bandung')
+                                    ->required()
+                                    ->maxLength(255),
+                                Forms\Components\TextInput::make('kelurahan')
+                                    ->required()
+                                    ->maxLength(255),
+                                Forms\Components\TextInput::make('kecamatan')
+                                    ->required()
+                                    ->maxLength(255),
+                                Forms\Components\TextInput::make('kota')
+                                    ->required()
+                                    ->maxLength(255),
+                                Forms\Components\TextInput::make('provinsi')
+                                    ->required()
+                                    ->maxLength(255),
+                            ]),
+
+                        Forms\Components\Fieldset::make('Data Sekolah Asal')
+                            ->schema([
+                                Forms\Components\TextInput::make('asal_sekolah')
+                                    ->label('Asal Sekolah')
+                                    ->required()
+                                    ->maxLength(255),
+                                Forms\Components\TextInput::make('alamat_sekolah')
+                                    ->label('Alamat Sekolah')
+                                    ->required()
+                                    ->maxLength(255),
+                            ]),
+                    ]),
                 Forms\Components\Hidden::make('gelombang_id')
                     ->default(M001MasterGelombang::where('status', true)->first()->id ?? null),
                 Forms\Components\Hidden::make('nomor_daftar'),
                 Forms\Components\Hidden::make('nomor_peserta'),
-                Forms\Components\TextInput::make('nik')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('nama_lengkap')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('tempat_lahir')
-                    ->maxLength(255),
-                Forms\Components\DatePicker::make('tanggal_lahir'),
-                Forms\Components\TextInput::make('alamat_di_bandung')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('no_telp_handphone')
-                    ->tel()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('kelurahan')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('kecamatan')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('kota')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('provinsi')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('email')
-                    ->email()
-                    ->maxLength(255),
-                Forms\Components\Select::make('agama_id')
-                    ->relationship('agama', 'nama'),
-                Forms\Components\Select::make('warga_negara')
-                    ->options([
-                        'WNI' => 'WNI',
-                        'WNA' => 'WNA'
-                    ])
-                    ->default('WNI'),
-                Forms\Components\TextInput::make('asal_sekolah')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('alamat_sekolah')
-                    ->maxLength(255),
-                Forms\Components\Select::make('golongan_darah_id')
-                    ->relationship('golonganDarah', 'nama'),
-                Forms\Components\TextInput::make('nik_ayah')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('nama_ayah')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('alamat_rumah_ayah')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('no_telp_handphone_ayah')
-                    ->tel()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('email_ayah')
-                    ->email()
-                    ->maxLength(255),
-                Forms\Components\Select::make('pendidikan_ayah_id')
-                    ->relationship('pendidikanAyah', 'nama'),
-                Forms\Components\Select::make('pekerjaan_ayah_id')
-                    ->relationship('pekerjaanAyah', 'nama'),
-                Forms\Components\TextInput::make('nik_ibu')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('nama_ibu')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('alamat_rumah_ibu')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('no_telp_handphone_ibu')
-                    ->tel()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('email_ibu')
-                    ->email()
-                    ->maxLength(255),
-                Forms\Components\Select::make('pendidikan_ibu_id')
-                    ->relationship('pendidikanIbu', 'nama'),
-                Forms\Components\Select::make('pekerjaan_ibu_id')
-                    ->relationship('pekerjaanIbu', 'nama'),
+                Forms\Components\Section::make('Data Orang Tua')
+                    ->description('Isi data Ayah & Ibu')
+                    ->schema([
+                        Forms\Components\Fieldset::make('Data Ayah')
+                            ->schema([
+                                Forms\Components\TextInput::make('nik_ayah')
+                                    ->label('NIK Ayah')
+                                    ->required()
+                                    ->maxLength(255),
+                                Forms\Components\TextInput::make('nama_ayah')
+                                    ->label('Nama Ayah')
+                                    ->required()
+                                    ->maxLength(255),
+                                Forms\Components\TextInput::make('no_telp_handphone_ayah')
+                                    ->label('No Telp/HP Ayah')
+                                    ->required()
+                                    ->tel()
+                                    ->maxLength(255),
+                                Forms\Components\TextInput::make('email_ayah')
+                                    ->label('Email Ayah')
+                                    ->email()
+                                    ->maxLength(255),
+                                Forms\Components\Select::make('pendidikan_ayah_id')
+                                    ->label('Pendidikan Ayah')
+                                    ->required()
+                                    ->relationship('pendidikanAyah', 'nama'),
+                                Forms\Components\Select::make('pekerjaan_ayah_id')
+                                    ->label('Pekerjaan Ayah')
+                                    ->required()
+                                    ->relationship('pekerjaanAyah', 'nama'),
+                                Forms\Components\Textarea::make('alamat_rumah_ayah')
+                                    ->label('Alamat Rumah Ayah')
+                                    ->required()
+                                    ->maxLength(255),
+                            ]),
+                        Forms\Components\Fieldset::make('Data Ibu')
+                            ->schema([
+                                Forms\Components\TextInput::make('nik_ibu')
+                                    ->label('NIK Ibu')
+                                    ->required()
+                                    ->maxLength(255),
+                                Forms\Components\TextInput::make('nama_ibu')
+                                    ->label('Nama Ibu')
+                                    ->required()
+                                    ->maxLength(255),
+                                Forms\Components\TextInput::make('no_telp_handphone_ibu')
+                                    ->label('No Telp/HP Ibu')
+                                    ->required()
+                                    ->tel()
+                                    ->maxLength(255),
+                                Forms\Components\TextInput::make('email_ibu')
+                                    ->label('Email Ibu')
+                                    ->email()
+                                    ->maxLength(255),
+                                Forms\Components\Select::make('pendidikan_ibu_id')
+                                    ->label('Pendidikan Ibu')
+                                    ->required()
+                                    ->relationship('pendidikanIbu', 'nama'),
+                                Forms\Components\Select::make('pekerjaan_ibu_id')
+                                    ->label('Pekerjaan Ibu')
+                                    ->required()
+                                    ->relationship('pekerjaanIbu', 'nama'),
+                                Forms\Components\Textarea::make('alamat_rumah_ibu')
+                                    ->label('Alamat Rumah Ibu')
+                                    ->required()
+                                    ->maxLength(255),
+                            ]),
+                    ]),
                 Forms\Components\TextInput::make('data_prestasi'),
                 Forms\Components\TextInput::make('sumbangan_sukarela')
                     ->numeric(),
@@ -114,12 +206,6 @@ class M008StudentRegistrationResource extends Resource
                 Forms\Components\Hidden::make('hasil_seleksi')
                     ->default(0),
                 Forms\Components\Hidden::make('virtual_account_id'),
-                Forms\Components\TextInput::make('pilihan_1')
-                    ->numeric(),
-                Forms\Components\TextInput::make('pilihan_2')
-                    ->numeric(),
-                Forms\Components\TextInput::make('pilihan_3')
-                    ->numeric(),
             ]);
     }
 
