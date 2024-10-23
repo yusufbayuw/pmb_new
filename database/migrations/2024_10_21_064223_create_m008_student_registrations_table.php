@@ -50,7 +50,7 @@ return new class extends Migration
             $table->float('sumbangan_sukarela')->nullable();
             $table->integer('verifikasi')->nullable()->default(0);
             $table->boolean('status')->nullable()->default(1);
-            $table->integer('hasil_seleksi')->nullable()->default(0);
+            $table->string('berkas_pembayaran')->nullable();
             $table->foreignId('virtual_account_id')->nullable()->constrained('m007_virtual_accounts')->nullOnDelete();
             $table->foreignId('pilihan_1')->nullable()->constrained('m004_master_jurusans')->nullOnDelete();
             $table->foreignId('pilihan_2')->nullable()->constrained('m004_master_jurusans')->nullOnDelete();

@@ -4,7 +4,7 @@
       <div class="flex lg:flex-1">
         <a href="#" class="-m-1.5 p-1.5">
           <span class="sr-only">Taruna Bakti University</span>
-          <img class="h-8 w-auto" src="https://tbu.ac.id/wp-content/uploads/2024/10/tbu.png" alt="">
+          <img class="h-8 w-auto" src="{{ asset('images/tbu.png') }}" alt="">
         </a>
       </div>
       <div class="flex flex-1 justify-end lg:hidden">
@@ -68,9 +68,8 @@
     <div
       class="flex flex-col md:flex-row mx-auto max-w-2xl  bg-indigo-600 rounded-lg border-1 border-gray-700 shadow-md shadow-gray-500 mt-8 mb-8">
       <div class="flex-1 px-6 py-6">
-        <h2 class="text-xl font-bold text-white mb-2 sm:mb-6 ml-2">Panitia PMB Taruna Bakti University <span
-            class="animate-spin"></span></h2>
-        <h3 class="text-lg font-semibold text-white mt-2 sm:mt-4 ml-2">Help Desk (08.00 - 14.00 Senin-Jumat)</h3>
+        <h2 class="text-xl font-bold text-white mb-2 sm:mb-6 ml-2">Help Desk (08.00 - 14.00 Senin-Jumat)</h2>
+        <h3 class="text-lg font-semibold text-white mt-2 sm:mt-4 ml-2">Panitia PMB Taruna Bakti University</h3>
         <p class="text-white mt-2 sm:mt-4 ml-2">
           Jalan L.L.R.E. Martadinata 91, 
           <br>
@@ -81,7 +80,7 @@
           <a href="https://maps.app.goo.gl/Uxe5XGQDejz9Z88s7">Map Taruna Bakti Univeristy</a>
           <br>
           <br class="hidden sm:visible">
-          Telepon Universitas: 08882000011
+          Telepon: 08882000011
         </p>
       </div>
       <div class="flex-1">
