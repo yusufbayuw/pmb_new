@@ -46,7 +46,7 @@ class Utb extends Component implements HasForms
             ->schema([
                 Section::make('PILIHAN PROGRAM STUDI')
                     ->icon('heroicon-o-academic-cap')
-                    ->description('Pilihlah tiga Program Studi')
+                    //->description('Pilihlah tiga Program Studi')
                     ->schema([
                         Select::make('pilihan_1')
                             ->label('Pilihan Ke-1')
@@ -62,7 +62,7 @@ class Utb extends Component implements HasForms
                             ->required(),
                     ]),
                 Section::make('DATA DIRI')
-                    ->description('Isi data diri')
+                    //->description('Isi data diri')
                     ->icon('heroicon-o-user')
                     ->schema([
                         TextInput::make('nik')
@@ -144,7 +144,8 @@ class Utb extends Component implements HasForms
                 Hidden::make('nomor_daftar'),
                 Hidden::make('nomor_peserta'),
                 Section::make('DATA ORANG TUA')
-                    ->description('Isi data Ayah & Ibu')
+                    //->description('Isi data Ayah & Ibu')
+                    ->icon('heroicon-o-users')
                     ->schema([
                         Fieldset::make('DATA AYAH')
                             ->schema([
@@ -211,28 +212,35 @@ class Utb extends Component implements HasForms
                                     ->maxLength(255),
                             ])->columnSpan(1),
                     ])->columns(2),
-                Repeater::make('data_prestasi')
-                    ->label('Data Prestasi')
+                Section::make('DATA PRESTASI')
+                    ->icon('heroicon-o-trophy')
                     ->schema([
-                        TextInput::make('prestasi')
-                            ->columnSpan(1),
-                        Select::make('tingkat')
-                            ->options([
-                                'Kabupaten/Kota' => 'Kabupaten/Kota',
-                                'Provinsi' => 'Provinsi',
-                                'Nasional' => 'Nasional',
-                                'Internasional' => 'Internasional'
-                            ])->columnSpan(1)
-                    ])
-                    ->reorderable(false)
-                    ->columns(2),
-                TextInput::make('sumbangan_sukarela')
-                    ->label('SUMBANGAN SUKARELA')
-                    ->numeric()
-                    ->step(1000000)
-                    ->minValue(1000000)
-                    ->default(1000000)
-                    ->hint('Minimal Rp 1.000.000,- dan kelipatannya'),
+                        Repeater::make('data_prestasi')
+                            ->label('')
+                            ->schema([
+                                TextInput::make('prestasi')
+                                    ->columnSpan(1),
+                                Select::make('tingkat')
+                                    ->options([
+                                        'Kabupaten/Kota' => 'Kabupaten/Kota',
+                                        'Provinsi' => 'Provinsi',
+                                        'Nasional' => 'Nasional',
+                                        'Internasional' => 'Internasional'
+                                    ])->columnSpan(1)
+                            ])
+                            ->reorderable(false)
+                            ->columns(2),
+                    ]),
+                Section::make('SUMBANGAN SUKARELA')
+                    ->icon('heroicon-o-banknotes')
+                    ->schema([
+                        TextInput::make('sumbangan_sukarela')
+                            ->label('Minimal Rp 1.000.000,- dan kelipatannya')
+                            ->numeric()
+                            ->step(1000000)
+                            ->minValue(1000000)
+                            ->default(1000000),
+                    ]),
                 Hidden::make('verifikasi')
                     ->default(0),
                 Hidden::make('status')->default(1),

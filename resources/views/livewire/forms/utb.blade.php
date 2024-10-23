@@ -1,6 +1,6 @@
-<div class="pt-6 md:pt-10 lg:pt-12">
+<div class="pt-6 md:pt-8 lg:pt-10 px-0 lg:px-56">
     <div class="text-center">
-        <h1 class="text-balance text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">Form Pendaftaran</h1>
+        <h1 class="text-balance text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">Form Pendaftaran <span class="text-2xl sm:text-4xl">📃</span></h1>
     </div>
     <div class="p-6 md:px-10 md:pb-10 lg:px-16 lg:pb-16">
         <form wire:submit="create">
@@ -15,4 +15,5 @@
         
         <x-filament-actions::modals />
     </div>
+    
 </div>
