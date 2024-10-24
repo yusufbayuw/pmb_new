@@ -9,6 +9,7 @@ use Filament\Actions;
 use Filament\Resources\Components\Tab;
 use Filament\Resources\Pages\ManageRecords;
 use Illuminate\Support\Facades\DB;
+use Livewire\Attributes\On;
 
 class ManageM008StudentRegistrations extends ManageRecords
 {
@@ -21,6 +22,7 @@ class ManageM008StudentRegistrations extends ManageRecords
         ];
     }
 
+    #[On('refreshTab')]
     public function getTabs(): array
     {
         $gelombang_id = M001MasterGelombang::where('status', 1)->first()->id;

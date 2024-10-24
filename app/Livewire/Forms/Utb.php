@@ -244,7 +244,7 @@ class Utb extends Component implements HasForms
                 Hidden::make('verifikasi')
                     ->default(0),
                 Hidden::make('status')->default(1),
-                Hidden::make('hasil_seleksi')
+                Hidden::make('berkas_pembayaran')
                     ->default(0),
                 Hidden::make('virtual_account_id'),
             ])->columns(2)

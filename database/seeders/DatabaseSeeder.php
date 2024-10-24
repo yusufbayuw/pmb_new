@@ -32,5 +32,6 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@demo.com',
             'password' => 'demo123'
         ]);
+        $this->call(M008StudentRegistrationSeeder::class);
     }
 }

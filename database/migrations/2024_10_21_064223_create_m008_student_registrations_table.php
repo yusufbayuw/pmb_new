@@ -47,7 +47,7 @@ return new class extends Migration
             $table->foreignId('pendidikan_ibu_id')->nullable()->constrained('m002_master_pendidikans')->nullOnDelete();
             $table->foreignId('pekerjaan_ibu_id')->nullable()->constrained('m003_master_pekerjaans')->nullOnDelete();
             $table->json('data_prestasi')->nullable();
-            $table->float('sumbangan_sukarela')->nullable();
+            $table->decimal('sumbangan_sukarela',12,2)->nullable();
             $table->integer('verifikasi')->nullable()->default(0);
             $table->boolean('status')->nullable()->default(1);
             $table->string('berkas_pembayaran')->nullable();
