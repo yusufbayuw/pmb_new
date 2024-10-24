@@ -352,7 +352,7 @@ class M008StudentRegistrationResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('gelombang.nama')
-                    ->numeric()
+                    ->label('Gelombang')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('nomor_daftar')
@@ -362,21 +362,27 @@ class M008StudentRegistrationResource extends Resource
                     ->label('No. Peserta')
                     ->searchable(),
                 TextColumn::make('nik')
+                    ->label('NIK')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('nama_lengkap')
+                    ->label('Nama')
                     ->searchable(),
                 TextColumn::make('tempat_lahir')
+                    ->label('Tempat Lahir')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('tanggal_lahir')
                     ->date()
+                    ->label('Tanggal Lahir')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('alamat_di_bandung')
+                    ->label('Alamat di Bandung')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('no_telp_handphone')
+                    ->label('No. Telp/HP')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('kelurahan')
@@ -398,64 +404,85 @@ class M008StudentRegistrationResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('warga_negara')
+                    ->label('Warga Negara')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('asal_sekolah')
+                    ->label('Asal Sekolah')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('alamat_sekolah')
+                    ->label('Alamat Sekolah')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('golonganDarah.nama')
+                    ->label('Golongan Darah')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('nik_ayah')
+                    ->label('NIK Ayah')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('nama_ayah')
+                    ->label('Nama Ayah')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('alamat_rumah_ayah')
+                    ->label('Alamat Ayah')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('no_telp_handphone_ayah')
+                    ->label('No. Telp Ayah')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('email_ayah')
+                    ->label('Email Ayah')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('pendidikanAyah.nama')
+                    ->label('Pendidikan Ayah')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('pekerjaanAyah.nama')
+                    ->label('Pekerjaan Ibu')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('nik_ibu')
+                    ->label('NIK Ibu')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('nama_ibu')
+                    ->label('Nama Ibu')
                     ->searchable()->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('alamat_rumah_ibu')
+                    ->label('Alamat Ibu')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('no_telp_handphone_ibu')
+                    ->label('No Telp Ibu')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('email_ibu')
+                    ->label('Email Ibu')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('pendidikanIbu.nama')
+                    ->label('Pendidikan Ibu')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('pekerjaanIbu.nama')
+                    ->label('Pekerjaan Ibu')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('sumbangan_sukarela')
+                    ->label('Sumbangan Sukarela')
+                    ->wrapHeader()
                     ->numeric()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('berkas_pembayaran')
-                    ->label('Pembayaran VA')
+                    ->label('Bukti Transfer')
+                    ->wrapHeader()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('virtualAccount.nomor')
